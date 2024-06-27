@@ -1,0 +1,18 @@
+//
+// Prefix header for all source files of the 'VKMessages' target in the 'VKMessages' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+    #import "Defines.h"
+    #import "Strings.h"
+    #import "NSNumber+Utilites.h"
+    #import "NSMutableArray+Utilites.h"
+    #import "NSDate+Utilites.h"
+    #import "VKSettings.h"
+    #import "NSString+HTML.h"
+    #import "NS(Attributed)String+Geometrics.h"
+    #import "NSApplication+Utilites.h"
+    #import "NSButton+Utilites.h"
+	#import "NSAttributedString+Hyperlink.h"
+#endif
