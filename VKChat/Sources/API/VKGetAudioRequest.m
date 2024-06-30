@@ -70,10 +70,12 @@
         if ([[[_response objectForKey:@"response"] objectForKey:@"items"] isKindOfClass:[NSArray class]]) {
             for (int i = 0; i < [[[_response objectForKey:@"response"] objectForKey:@"items"] count]; i++) {
                 NSDictionary *dict = [[[_response objectForKey:@"response"] objectForKey:@"items"] objectAtIndex:i];
-                VKSong *song = [[VKSong alloc] initWithDictionary:dict];
-                
-                [songs addObject:song];
-                [song release];
+                if ([[dict objectForKey:@"ready"] intValue] == 1) {
+                    VKSong *song = [[VKSong alloc] initWithDictionary:dict];
+                    
+                    [songs addObject:song];
+                    [song release];
+                }
             }
         }
         

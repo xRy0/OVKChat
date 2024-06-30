@@ -42,7 +42,7 @@
     _method = @"messages.send";
     
     if (self.userID > 0) {
-        [self addParamWithKey:@"uid" value:[NSString stringWithFormat:@"%ld", self.userID]];
+        [self addParamWithKey:@"user_id" value:[NSString stringWithFormat:@"%ld", self.userID]];
     }
     
     

@@ -19,7 +19,7 @@
     _resultBlock = [aResultBlock copy];
     _failureBlock = [aFailureBlock copy];
     
-    _method = @"photos.getProfileUploadServer";
+    _method = @"photos.getOwnerPhotoUploadServer";
     
     [self start];
 }

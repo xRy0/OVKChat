@@ -38,9 +38,7 @@
     
     _method = @"messages.getConversations";
     
-    if (self.userID < 0) {
-        [self addParamWithKey:@"uid" value:[NSString stringWithFormat:@"%ld", self.userID]];
-    }
+   
     
     if (self.offset >= 0) {
         [self addParamWithKey:@"offset" value:[NSString stringWithFormat:@"%ld", self.offset]];
@@ -64,8 +62,8 @@
         NSMutableArray *dialogs = [[[NSMutableArray alloc] init] autorelease];
         
         if ([[[_response objectForKey:@"response"] objectForKey:@"items"] isKindOfClass:[NSArray class]]) {
-            for (int i = 1; i < [[[_response objectForKey:@"response"] objectForKey:@"items"] count]; i++) {
-                NSDictionary *dict = [[[_response objectForKey:@"response"] objectForKey:@"items"] objectAtIndex:i];
+            for (int i = 0; i < [[[_response objectForKey:@"response"] objectForKey:@"items"] count]; i++) {
+                NSDictionary *dict = [[[[_response objectForKey:@"response"] objectForKey:@"items"] objectAtIndex:i] objectForKey:@"last_message"];
                 VKDialog *dialog = [[VKDialog alloc] initWithDictionary:dict];
    
                 [dialogs addObject:dialog];

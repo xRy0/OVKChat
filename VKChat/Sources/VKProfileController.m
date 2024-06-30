@@ -102,10 +102,25 @@
         VKGetProfileUploadServerRequestResultBlock resultBlock = ^(NSURL *url){
             __block ASIFormDataRequest *post = [ASIFormDataRequest requestWithURL:url];
             
-            NSBitmapImageRep *imgRep = [[image representations] objectAtIndex:0];
-            NSData *data = [imgRep representationUsingType:NSPNGFileType properties:nil];
+            NSBitmapImageRep *imgRep = nil;
 
-            [post addData:data withFileName:@"photo.png" andContentType:@"image/png" forKey:@"photo"];
+            // Найти представление типа NSBitmapImageRep
+            for (NSImageRep *rep in [image representations]) {
+                if ([rep isKindOfClass:[NSBitmapImageRep class]]) {
+                    imgRep = (NSBitmapImageRep *)rep;
+                    break;
+                }
+            }
+            
+            if (imgRep) {
+                NSData *data = [imgRep representationUsingType:NSPNGFileType properties:nil];
+                [post addData:data withFileName:@"photo.png" andContentType:@"image/png" forKey:@"photo"];
+            } else {
+                // Обработка случая, когда NSBitmapImageRep не найдено
+                NSLog(@"Не удалось найти NSBitmapImageRep в представлениях изображения");
+            }
+            
+            
             
             [post setCompletionBlock:^() {                
                 id response = [post.responseString JSONValue];

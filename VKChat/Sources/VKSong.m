@@ -33,14 +33,16 @@
     self = [super init];
     
     if (self) {
-        self.identifier = [[dict objectForKey:@"aid"] intValue];
-        self.userID = [[dict objectForKey:@"owner_id"] intValue];
-        self.artist = [dict objectForKey:@"artist"];
-        self.artist = [self.artist stringByDecodingHTMLEntities];
-        self.title = [dict objectForKey:@"title"];
-        self.title = [self.title stringByDecodingHTMLEntities];
-        self.url = [NSURL URLWithString:[dict objectForKey:@"url"]];
-        self.duration = [[dict objectForKey:@"duration"] intValue];
+        
+            self.identifier = [[dict objectForKey:@"aid"] intValue];
+            self.userID = [[dict objectForKey:@"owner_id"] intValue];
+            self.artist = [dict objectForKey:@"artist"];
+            self.artist = [self.artist stringByDecodingHTMLEntities];
+            self.title = [dict objectForKey:@"title"];
+            self.title = [self.title stringByDecodingHTMLEntities];
+            self.url = [NSURL URLWithString:[dict objectForKey:@"url"]];
+            self.duration = [[dict objectForKey:@"duration"] intValue];
+        
     }
     
     return self;

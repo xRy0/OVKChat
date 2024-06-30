@@ -65,10 +65,10 @@
         self.isAllMessagesLoaded = NO;
         self.isOnline = NO;
         
-        self.userID = [[[dict objectForKey:@"user_id"] objectForKey:@"last_message"] intValue];
-        self.title = [[dict objectForKey:@"title"] objectForKey:@"last_message"];
-        self.body = [[dict objectForKey:@"body"] objectForKey:@"last_message"];
-        self.lastUpdate = [NSDate dateWithTimeIntervalSince1970:[[[dict objectForKey:@"date"] objectForKey:@"last_message"] intValue]];
+        self.userID = [[dict objectForKey:@"user_id"] intValue];
+        self.title = [dict objectForKey:@"title"];
+        self.body = [dict objectForKey:@"body"];
+        self.lastUpdate = [NSDate dateWithTimeIntervalSince1970:[[dict objectForKey:@"date"] intValue]];
         
         self.body = [self.body stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"];
         self.body = [self.body stringByDecodingHTMLEntities];
@@ -79,7 +79,7 @@
         
         self.isHasUnread = NO;
          
-        if (![[[dict objectForKey:@"read_state"] objectForKey:@"last_message"] boolValue] && ![[[dict objectForKey:@"out"] objectForKey:@"last_message"] boolValue]) {
+        if (![[dict objectForKey:@"read_state"] boolValue] && ![[dict objectForKey:@"out"] boolValue]) {
             self.isHasUnread = YES;
         }
         
@@ -90,42 +90,7 @@
         self.isDocument = NO;
 		self.isMap = NO;
 		
-        if ([self.body length] == 0) {
-            if ([dict objectForKey:@"attachments"] && [[dict objectForKey:@"attachments"] isKindOfClass:[NSArray class]]) {
-                for (NSDictionary *attach in [dict objectForKey:@"attachments"]) {
-                    if ([attach objectForKey:@"photo"]) {
-                        self.isPhoto = YES;
-                        break;
-                    }
-                    
-                    if ([attach objectForKey:@"audio"]) {
-                        self.isAudio = YES;
-                        break;
-                    }
-                    
-                    if ([attach objectForKey:@"video"]) {
-                        self.isVideo = YES;
-                        break;
-                    }
-					
-					if ([attach objectForKey:@"doc"]) {
-                        self.isDocument = YES;
-                        break;
-                    }
-                }
-            } else {
-                if ([dict objectForKey:@"fwd_messages"] && [[dict objectForKey:@"fwd_messages"] isKindOfClass:[NSArray class]]) {
-                    for (NSDictionary *messageDict in [dict objectForKey:@"fwd_messages"]) {
-                        self.isMessage = YES;
-                        break;
-                    }
-                }
-            }
-			
-			if ([dict objectForKey:@"geo"]) {
-				self.isMap = YES;
-			}
-        }
+        
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNewMessages) name:VK_NOTIFICATION_NEED_UPDATE_MESSAGES object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedNewMessage:) name:VK_NOTIFICATION_NEW_MESSAGE object:nil];
@@ -205,7 +170,7 @@
     request.count = VK_MESSAGES_PER_REQUEST;
 
     
-        request.userID = self.userID;
+    request.userID = self.userID;
     
     
     VKMessagesHistoryRequestResultBlock resultBlock = ^(NSArray *messages) {

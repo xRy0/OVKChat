@@ -36,7 +36,7 @@
     _resultBlock = [aResultBlock copy];
     _failureBlock = [aFailureBlock copy];
     
-    _method = @"photos.saveProfilePhoto";
+    _method = @"photos.saveOwnerPhoto";
 
     if (serverID > 0) {
         [self addParamWithKey:@"server" value:[NSString stringWithFormat:@"%ld", serverID]];

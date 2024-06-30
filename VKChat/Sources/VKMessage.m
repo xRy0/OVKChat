@@ -36,8 +36,8 @@
     self = [super init];
     
     if (self) {
-        self.identifier = [[dict objectForKey:@"mid"] intValue];
-        self.userID = [[dict objectForKey:@"uid"] intValue];
+        self.identifier = [[dict objectForKey:@"id"] intValue];
+        self.userID = [[dict objectForKey:@"from_id"] intValue];
         self.title = [dict objectForKey:@"title"];
         self.body = [dict objectForKey:@"body"];
         self.isRead = [[dict objectForKey:@"read_state"] boolValue];

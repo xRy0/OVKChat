@@ -37,8 +37,8 @@
     
     _method = @"friends.get";
     
-    [self addParamWithKey:@"uid" value:[NSString stringWithFormat:@"%ld", self.userID]];
-    [self addParamWithKey:@"fields" value:@"uid,first_name,last_name,nickname,screen_name,sex,bdate,city,country,timezone,photo,photo_medium,photo_big,has_mobile,rate,contacts,education,online,counters"];
+    //[self addParamWithKey:@"user_id" value:[NSString stringWithFormat:@"%ld", self.userID]];
+    [self addParamWithKey:@"fields" value:@"id,first_name,last_name,nickname,screen_name,sex,bdate,city,country,timezone,photo,photo_medium,photo_big,has_mobile,rate,contacts,education,online,counters,last_seen,photo_400_orig,bdate"];
     
     if (self.offset >= 0) {
         [self addParamWithKey:@"offset" value:[NSString stringWithFormat:@"%ld", self.offset]];
@@ -57,9 +57,9 @@
     if (!_error) {
         NSMutableArray *friends = [[[NSMutableArray alloc] init] autorelease];
         
-        if ([[_response objectForKey:@"response"] isKindOfClass:[NSArray class]]) {
-            for (int i = 0; i < [[_response objectForKey:@"response"] count]; i++) {
-                NSDictionary *dict = [[_response objectForKey:@"response"] objectAtIndex:i];
+        if ([[[_response objectForKey:@"response"] objectForKey:@"items"] isKindOfClass:[NSArray class]]) {
+            for (int i = 0; i < [[[_response objectForKey:@"response"] objectForKey:@"items"] count]; i++) {
+                NSDictionary *dict = [[[_response objectForKey:@"response"] objectForKey:@"items"] objectAtIndex:i];
                 VKProfile *profile = [[VKProfile alloc] initWithDictionary:dict loadPhoto:NO];
                 
                 [friends addObject:profile];

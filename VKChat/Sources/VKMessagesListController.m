@@ -153,7 +153,7 @@
     
     NSInteger count = [_items count];
     
-    if ((!dialog.isOnline && !dialog.isChat) || isUserTyping) {
+    if ((!dialog.isOnline) || isUserTyping) {
         count = count + 1;
     }
     
@@ -398,19 +398,11 @@
                 if (isMe) {
                     cell.avatar = [VKSettings currentProfile].photoRec;
                 } else {
-                    if (dialog.isChat) {
-                        for (VKProfile *profile in dialog.profiles) {
-                            if (profile.identifier == message.userID) {
-                                cell.avatar = profile.photoRec;
-                                break;
-                            }
-                        }
-                    } else {
 						if ([dialog.profiles count] > 0) {
 							VKProfile *profile = [dialog.profiles objectAtIndex:0];
 							cell.avatar = profile.photoRec;
 						}
-                    }
+                    
                 }
                 
                 cell.row = row;
@@ -490,20 +482,14 @@
                 y = y + height;
             }
         } else {
-            if ((!dialog.isOnline && !dialog.isChat) || isUserTyping) {
+            if ((!dialog.isOnline) || isUserTyping) {
                 VKProfile *profile = nil;
                 
-                if (dialog.isChat) {
-                    for (VKProfile *_profile in dialog.profiles) {
-                        if (typingUserID == _profile.identifier) {
-                            profile = _profile;
-                        }
-                    }
-                } else {
+                
                     if ([dialog.profiles count] > 0) {
                         profile = [dialog.profiles objectAtIndex:0];
                     }
-                }
+                
                 
                 if (profile) {
                     VKMessagesInfoCell *cell = [[VKMessagesInfoCell alloc] initWithFrame:CGRectMake(0, y, contentView.frame.size.width, 40)];
@@ -943,7 +929,7 @@
 }
 
 - (void)updateTyping:(NSNotification *)notification {
-    if (!dialog.isChat && [notification.object intValue] == dialog.userID) {
+    if ([notification.object intValue] == dialog.userID) {
         dialog.isOnline = YES;
         isUserTyping = YES;
 

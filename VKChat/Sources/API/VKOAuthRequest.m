@@ -72,7 +72,7 @@
 - (NSURL *)oathURL {
     //NSString *oauthLink = [NSString stringWithFormat:@"http://api.vk.com/oauth/authorize?client_id=%@&redirect_uri=%@", appID, redirectURI];
     //NSString *oauthLink = [NSString stringWithFormat:@"https://api.vk.com/oauth/token?grant_type=password&client_id=%@&client_secret=%@&username=%@&password=%@", VK_APP_ID, VK_APP_SECRET, username, password];
-    NSString *oauthLink = [NSString stringWithFormat:@"https://ovk.to/authorize?client_name=%@&redirect_uri=%@&v=5.1", appID, redirectURI];
+    NSString *oauthLink = [NSString stringWithFormat:@"https://ovk.to/authorize?client_name=%s&redirect_uri=%@&v=5.1", "OVKChat", redirectURI];
     NSString *type = @"page";
     
     switch (displayType) {

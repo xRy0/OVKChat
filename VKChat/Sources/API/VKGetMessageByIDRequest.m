@@ -23,7 +23,7 @@
     
     _method = @"messages.getById";
     
-    [self addParamWithKey:@"mid" value:[NSString stringWithFormat:@"%ld", messageID]];
+    [self addParamWithKey:@"message_ids" value:[NSString stringWithFormat:@"%ld", messageID]];
     
     [self start];
 }
@@ -33,7 +33,7 @@
     
     if (!_error) {
         if (_resultBlock) {
-            VKMessage *message = [[[VKMessage alloc] initWithDictionary:[[_response objectForKey:@"response"] lastObject]] autorelease];
+            VKMessage *message = [[[VKMessage alloc] initWithDictionary:[[[_response objectForKey:@"response"] objectForKey:@"items"] lastObject]] autorelease];
             _resultBlock(message);
         }
     }

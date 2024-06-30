@@ -38,7 +38,7 @@
     _method = @"messages.getHistory";
     
     if (self.userID > 0) {
-        [self addParamWithKey:@"uid" value:[NSString stringWithFormat:@"%ld", self.userID]];
+        [self addParamWithKey:@"user_id" value:[NSString stringWithFormat:@"%ld", self.userID]];
     }
     
     
@@ -59,9 +59,9 @@
     if (!_error) {
         NSMutableArray *messages = [[[NSMutableArray alloc] init] autorelease];
         
-        if ([[_response objectForKey:@"response"] isKindOfClass:[NSArray class]]) {
-            for (int i = 1; i < [[_response objectForKey:@"response"] count]; i++) {
-                NSDictionary *dict = [[_response objectForKey:@"response"] objectAtIndex:i];
+        if ([[[_response objectForKey:@"response"] objectForKey:@"items"] isKindOfClass:[NSArray class]]) {
+            for (int i = 0; i < [[[_response objectForKey:@"response"] objectForKey:@"items"] count]; i++) {
+                NSDictionary *dict = [[[_response objectForKey:@"response"] objectForKey:@"items"] objectAtIndex:i];
                 VKMessage *message = [[VKMessage alloc] initWithDictionary:dict];
                 
                 [messages addObject:message];

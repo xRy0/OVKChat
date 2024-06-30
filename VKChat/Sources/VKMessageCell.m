@@ -238,7 +238,7 @@
         maxWidth = maxWidth + 60;
     }
     
-    width = (int)self.contentWidth;
+    width = (int)self.contentWidth + 5;
     
     if (width > maxWidth) {
         width = maxWidth;

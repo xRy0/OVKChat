@@ -74,7 +74,7 @@
         VKDialog *dialog = [_filteredDialogs objectAtIndex:i];
         
         
-        if ([defaults objectForKey:@"SelectedDialogUserID"] && !dialog.isChat) {
+        if ([defaults objectForKey:@"SelectedDialogUserID"]) {
             if (dialog.userID == [defaults integerForKey:@"SelectedDialogUserID"]) {
                 selectedRow = i;
             }
@@ -156,37 +156,7 @@
 	NSArray *temp = [NSArray arrayWithArray:_dialogs];
 	
     for (__block VKDialog *dialog in temp) {
-        if (dialog.isChat) {
-            for (id userID in dialog.users) {
-                if ([profilesInProgress objectForKey:[NSString stringWithFormat:@"%d", [userID intValue]]]) {
-                    continue;
-                }
-                
-                [profilesInProgress setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%d", [userID intValue]]];
-                
-                if (![VKSettings isProfileExists:[userID intValue]]) {
-                    __block VKProfileRequest *request = [[VKProfileRequest alloc] init];
-                    
-                    request.accessToken = [VKAccessToken token];
-                    request.userID = [userID intValue];
-
-                    VKProfileRequestResultBlock resultBlock = ^(VKProfile *profile) {
-                        [VKSettings addProfile:profile];
-						[profilesInProgress removeObjectForKey:[NSString stringWithFormat:@"%ld", profile.identifier]];
-
-						[self updateAvatars];
-
-                        [request release];
-                    };
-                    
-                    VKRequestFailureBlock failureBlock = ^(NSError *error) {
-                        [request release];
-                    };
-                    
-                    [request startWithResultBlock:resultBlock failureBlock:failureBlock];
-                }
-            }
-        } else {
+        
             if (![VKSettings isProfileExists:dialog.userID]) {
                 if ([profilesInProgress objectForKey:[NSString stringWithFormat:@"%ld", dialog.userID]]) {
                     continue;
@@ -214,7 +184,7 @@
                 
                 [request startWithResultBlock:resultBlock failureBlock:failureBlock];
             }
-        }
+        
 		
 		[self updateCellForDialog:dialog];
     }
@@ -228,17 +198,11 @@
 	for (__block VKDialog *dialog in temp) {
 		[dialog removeProfiles];
 		
-        if (dialog.isChat) {
-            for (id userID in dialog.users) {
-				if ([VKSettings isProfileExists:[userID intValue]]) {
-                    [dialog addProfile:[VKSettings userProfile:[userID intValue]]];
-                }
-			}
-		} else {
+       
 			if ([VKSettings isProfileExists:dialog.userID]) {
 				[dialog addProfile:[VKSettings userProfile:dialog.userID]];
 			}
-		}
+		
 	}
 	
 	for (__block VKDialog *dialog in temp) {
@@ -267,18 +231,7 @@
 	NSInteger index = [_filteredDialogs indexOfObject:dialog];
 	VKDialogCell *cell = (VKDialogCell *)[listView cellForRowAtIndex:index];
 	
-	if (dialog.isChat) {
-		NSMutableArray *images = [NSMutableArray array];
-		
-		for (VKProfile *profile in dialog.profiles) {
-			if (profile.photoRec) {
-				[images addObject:profile.photoRec];
-			}
-		}
-		
-		cell.avatars = images;
-		cell.name = dialog.title;
-	} else {
+	
 		if ([dialog.profiles count] > 0) {
 			VKProfile *profile = [dialog.profiles objectAtIndex:0];
 			
@@ -288,7 +241,7 @@
 			
 			cell.name = [NSString stringWithFormat:@"%@ %@", profile.firstName, profile.lastName];
 		}
-	}
+	
 	
 	[cell setNeedsDisplay:YES];
 	
@@ -301,34 +254,7 @@
     if (returnCode == NSAlertDefaultReturn) {
         __block VKDialog *dialog = [_filteredDialogs objectAtIndex:deleteRowIndex];
         
-        if (dialog.isChat) {
-            __block VKDeleteDialogRequest *request = [[VKDeleteDialogRequest alloc] init];
-            
-            request.accessToken = [VKAccessToken token];
-            
-            VKDeleteDialogRequestResultBlock resultBlock = ^() {
-				[_filteredDialogs removeObject:dialog];
-				[_dialogs removeObject:dialog];
-				
-				NSInteger selectedRow = listView.selectedRow;
-				
-				[listView reloadData];
-				
-				if (selectedRow == -1) {
-					selectedRow = 0;
-				}
-				
-				listView.selectedRow = selectedRow;
-				
-                [request release];
-            };
-            
-            VKRequestFailureBlock failureBlock = ^(NSError *error) {
-                [request release];
-            };
-            
-            [request startWithResultBlock:resultBlock failureBlock:failureBlock];
-        } else {
+        
             VKProfile *profile = [dialog.profiles objectAtIndex:0];
             __block VKDeleteDialogRequest *request = [[VKDeleteDialogRequest alloc] init];
         
@@ -357,7 +283,7 @@
             };
         
             [request startWithResultBlock:resultBlock failureBlock:failureBlock];
-        }
+        
     }       
 }
 
@@ -415,9 +341,7 @@
         NSString *name = [NSString stringWithFormat:@"%@ %@", profile.firstName, profile.lastName];
         NSString *text = [NSString stringWithFormat:VK_STR_DELETE_DIALOG_TEXT, name];
         
-        if (dialog.isChat) {
-            text = [NSString stringWithFormat:VK_STR_DELETE_CHAT_TEXT, dialog.title];
-        }
+        
         
         NSAlert *alert = [NSAlert alertWithMessageText:VK_STR_DELETE_DIALOG_TITLE defaultButton:VK_STR_OK alternateButton:VK_STR_CANCEL otherButton:nil informativeTextWithFormat:text, nil];
         [alert beginSheetModalForWindow:[[NSApp delegate] window] modalDelegate:self didEndSelector:@selector(deleteAlertDidEnd: returnCode: contextInfo:) contextInfo:nil];
@@ -428,11 +352,10 @@
 	for (VKDialog *_dialog in _dialogs) {
 		
 		
-		if (!dialog.isChat && !_dialog.isChat) {
 			if (dialog.userID == _dialog.userID) {
 				return YES;
 			}
-		}
+		
 	}
 	
 	return NO;
@@ -468,25 +391,11 @@
 		cell.text = dialog.body;
         cell.isOnline = dialog.isOnline;
         cell.isHasUnread = dialog.isHasUnread;
-        cell.isChat = dialog.isChat;
+        cell.isChat = NO;
         cell.name = @"";
 		cell.avatars = [NSArray arrayWithObject:[NSImage imageNamed:@"DefaultAvatar"]];
 
-        if (dialog.isChat) {
-            cell.name = dialog.title;
-            
-            NSMutableArray *images = [NSMutableArray array];
-            
-            for (VKProfile *profile in dialog.profiles) {
-				if (profile.photoRec) {
-					[images addObject:profile.photoRec];
-				} else {
-					[images addObject:[NSImage imageNamed:@"DefaultAvatar"]];
-				}
-            }
-            
-            cell.avatars = images;
-        } else {
+        
 			if ([dialog.profiles count] > 0) {
 				VKProfile *profile = [dialog.profiles objectAtIndex:0];
             
@@ -498,7 +407,7 @@
             
 				cell.name = [NSString stringWithFormat:@"%@ %@", profile.firstName, profile.lastName];
 			}
-        }
+        
         
         NSInteger days = [dialog.lastUpdate daysCountBetweenDate:[NSDate date]];
         
@@ -574,12 +483,10 @@
             
             VKDialog *dialog = [_filteredDialogs objectAtIndex:row];
             
-            if (dialog.isChat) {
-                [defaults removeObjectForKey:@"SelectedDialogUserID"];
-            } else {
+            
                 [defaults setInteger:dialog.userID forKey:@"SelectedDialogUserID"];
                 [defaults removeObjectForKey:@"SelectedDialogChatID"];
-            }
+            
             
             [dialog addDelegate:messagesController];
             dialog.isActive = YES;
@@ -642,10 +549,10 @@
     VKDialogCell *cell = (VKDialogCell *)sender;
     VKDialog *dialog = [_filteredDialogs objectAtIndex:cell.row];
     
-    if (!dialog.isChat) {
+    
         VKProfile *profile = [dialog.profiles objectAtIndex:0];
         [[NSNotificationCenter defaultCenter] postNotificationName:VK_NOTIFICATION_SHOW_USER_PROFILE object:profile];
-    }
+    
 }
 
 - (IBAction)newDialog:(id)sender {
@@ -660,11 +567,7 @@
     for (VKDialog *dialog in temp) {
         NSString *name = @"";
         
-        if (dialog.isChat) {
-            for (VKProfile *profile in dialog.profiles) {
-                name = [name stringByAppendingFormat:@"%@ %@ ", profile.firstName, profile.lastName];
-            }
-        } else if ([dialog.profiles count] > 0) {
+        if ([dialog.profiles count] > 0) {
             VKProfile *profile = [dialog.profiles objectAtIndex:0];
             name = [NSString stringWithFormat:@"%@ %@", profile.firstName, profile.lastName];
         }

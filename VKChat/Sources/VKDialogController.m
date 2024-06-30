@@ -24,12 +24,9 @@
 }
 
 - (void)refresh {
-    if (dialog.isChat) {
-        self.window.title = dialog.title;
-    } else {
         VKProfile *profile = [[dialog profiles] objectAtIndex:0];
         self.window.title = [NSString stringWithFormat:@"%@ %@", profile.firstName, profile.lastName];
-    }
+    
     
     messagesController.dialog = dialog;
     [messagesController refresh];
