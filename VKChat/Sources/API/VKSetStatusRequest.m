@@ -42,7 +42,7 @@
     if (self.audioID > 0 && self.audioOwnerID > 0) {
         _method = @"audio.setBroadcast";
         [self addParamWithKey:@"audio" value:[NSString stringWithFormat:@"%ld_%ld", self.audioOwnerID, self.audioID]];
-        [self addParamWithKey:@"target_ids" value:[NSString stringWithFormat:@"%ld_%ld", self.userID]];
+        [self addParamWithKey:@"target_ids" value:[NSString stringWithFormat:@"%ld", self.userID]];
     }
     
     else if ([self.text length] > 0) {

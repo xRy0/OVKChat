@@ -26,7 +26,7 @@
     
     if (self) {
         self.offset = -1;
-        self.count = -1;
+        self.count = 999999;
     }
     
     return self;

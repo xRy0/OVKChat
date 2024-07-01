@@ -11,6 +11,7 @@
 @implementation VKSong
 
 @synthesize identifier;
+@synthesize uidentifier;
 @synthesize userID;
 @synthesize artist;
 @synthesize title;
@@ -35,6 +36,7 @@
     if (self) {
         
             self.identifier = [[dict objectForKey:@"aid"] intValue];
+            self.uidentifier = [dict objectForKey:@"unique_id"];
             self.userID = [[dict objectForKey:@"owner_id"] intValue];
             self.artist = [dict objectForKey:@"artist"];
             self.artist = [self.artist stringByDecodingHTMLEntities];

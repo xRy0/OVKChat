@@ -11,6 +11,7 @@
 @interface VKSong : NSObject
 
 @property (nonatomic, assign) NSInteger identifier;
+@property (nonatomic, copy) NSString *uidentifier;
 @property (nonatomic, assign) NSInteger userID;
 @property (nonatomic, copy) NSString *artist;
 @property (nonatomic, copy) NSString *title;

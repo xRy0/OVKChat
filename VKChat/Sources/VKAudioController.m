@@ -71,7 +71,7 @@
 
 - (BOOL)isSongExists:(VKSong *)song {
 	for (VKSong *_song in _songs) {
-		if (song.identifier == _song.identifier) {
+		if (song.uidentifier == _song.uidentifier) {
 			return YES;
 		}
 	}
