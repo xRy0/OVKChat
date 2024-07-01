@@ -13,6 +13,7 @@
 @synthesize text;
 @synthesize audioID;
 @synthesize audioOwnerID;
+@synthesize userID;
 
 - (void)dealloc {
     [text release];
@@ -26,6 +27,7 @@
     if (self) {
         self.text = @"";
         self.audioID = -1;
+        self.userID = -1;
     }
     
     return self;
@@ -38,11 +40,12 @@
     
     
     if (self.audioID > 0 && self.audioOwnerID > 0) {
-        _method = @"audio.beacon";
-        [self addParamWithKey:@"aid" value:[NSString stringWithFormat:@"%ld_%ld", self.audioOwnerID, self.audioID]];
+        _method = @"audio.setBroadcast";
+        [self addParamWithKey:@"audio" value:[NSString stringWithFormat:@"%ld_%ld", self.audioOwnerID, self.audioID]];
+        [self addParamWithKey:@"target_ids" value:[NSString stringWithFormat:@"%ld_%ld", self.userID]];
     }
     
-    if ([self.text length] > 0) {
+    else if ([self.text length] > 0) {
         _method = @"status.set";
         [self addParamWithKey:@"text" value:[self.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     }

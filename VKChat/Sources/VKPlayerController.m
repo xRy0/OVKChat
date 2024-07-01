@@ -114,6 +114,7 @@
         request.accessToken = [VKAccessToken token];
         request.audioOwnerID = song.userID;
         request.audioID = song.identifier;
+        request.userID = [VKAccessToken userID];
         
         VKSetStatusRequestResultBlock resultBlock = ^(NSString *status) {
             [[NSNotificationCenter defaultCenter] postNotificationName:VK_NOTIFICATION_UPDATE_STATUS object:nil];

@@ -18,6 +18,7 @@ typedef void (^VKSetStatusRequestResultBlock)(NSString *status);
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, assign) NSInteger audioID;
 @property (nonatomic, assign) NSInteger audioOwnerID;
+@property (nonatomic, assign) NSInteger userID;
 
 - (void)startWithResultBlock:(VKSetStatusRequestResultBlock)aResultBlock failureBlock:(VKRequestFailureBlock)aFailureBlock;
 
