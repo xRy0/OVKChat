@@ -22,7 +22,7 @@
 #define	VK_MAP_URL @"http://maps.yandex.ru/?ll=%@&z=15&l=map"
 
 #define VK_APP_ID @"2945354"
-#define VK_APP_SECRET @"MKqkkyjbWz8bXUfAG1ZJ"
+#define VK_APP_SECRET @"blank"
 #define VK_ERROR_DOMAIN @"VK_ERROR_DOMAIN"
 #define VK_ERROR_CAPTCHA_ID @"CaptchaID"
 #define VK_ERROR_CAPTCHA_IMG @"CaptchaImage"
