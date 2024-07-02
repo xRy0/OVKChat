@@ -6,7 +6,7 @@
  Copyright (c) 2012 Sergey Lenkov. All rights reserved.
  */
 
-"ABOUT_APP_NAME" = "VK Chat";
+"ABOUT_APP_NAME" = "OVK Chat";
 "ABOUT_APP_VERSION" = "0.7.1";
 "OK" = "OK";
 "LOGIN" = "Вход";
