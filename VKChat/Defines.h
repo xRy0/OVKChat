@@ -11,6 +11,7 @@
 
 #define VK_APP_URL @"http://github.com"
 #define VK_URL @"http://vk.com"
+#define API_URL @"https://ovk.to"
 #define VK_ALBUM_URL @"http://vk.com/album"
 #define VK_WALL_URL @"http://vk.com/wall"
 #define VK_VIDEO_URL @"http://vk.com/video"

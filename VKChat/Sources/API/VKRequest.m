@@ -38,7 +38,7 @@
 }
 
 - (void)_init {
-    _apiURI = [@"https://ovk.to/method" copy];
+    _apiURI = [[NSString stringWithFormat:@"%@%@", API_URL, @"/method"] copy];
     _parameters = [[NSMutableArray alloc] init];
     _method = @"";
     _accessToken = @"";
@@ -66,7 +66,7 @@
         _method = [_method stringByAppendingString:@".xml"];
     }
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?%@access_token=%@&v=%@", _apiURI, _method, params, _accessToken, _version]];
+    NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@/%@?%@access_token=%@&v=%@", _apiURI, _method, params, _accessToken, _version] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     _request = [[ASIHTTPRequest alloc] initWithURL:url];
     _request.timeOutSeconds = 60;

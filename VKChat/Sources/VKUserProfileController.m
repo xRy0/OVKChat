@@ -71,7 +71,7 @@
     firstNameField.stringValue = profile.firstName;
 	lastNameField.stringValue = profile.lastName;
 	
-	if (profile.city.length > 0) {
+	if (profile.city) {
 		cityField.stringValue = profile.city;
 		
 		NSRect frame = cityLabel.frame;
