@@ -68,6 +68,9 @@
     
     NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"%@/%@?%@access_token=%@&v=%@", _apiURI, _method, params, _accessToken, _version] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
+    if ([_method  isEqual: @"messages.send"] || [_method  isEqual: @"status.set"]){
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?%@access_token=%@&v=%@", _apiURI, _method, params, _accessToken, _version]];
+    }
     _request = [[ASIHTTPRequest alloc] initWithURL:url];
     _request.timeOutSeconds = 60;
     _request.delegate = self;
