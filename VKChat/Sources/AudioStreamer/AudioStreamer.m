@@ -1985,32 +1985,41 @@ cleanup:
         
         if (AudioObjectGetPropertyData(kAudioObjectSystemObject, &propertyAddress, 0, NULL, &propertySize, deviceIDs) == noErr) {
             AudioObjectPropertyAddress      deviceAddress;
-            char                            deviceName[64];
-            char                            manufacturerName[64];
+            CFStringRef                     deviceName;
+            CFStringRef                     manufacturerName;
             
-            for (NSInteger idx=0; idx<numDevices; idx++) {
-                propertySize = sizeof(deviceName);
-                deviceAddress.mSelector = kAudioDevicePropertyDeviceName;
-                deviceAddress.mScope = kAudioObjectPropertyScopeGlobal;
+            for (NSInteger idx = 0; idx < numDevices; idx++) {
+                // Проверка, является ли устройство аудио-выходом
+                propertySize = 0;
+                deviceAddress.mSelector = kAudioDevicePropertyStreams;
+                deviceAddress.mScope = kAudioDevicePropertyScopeOutput;
                 deviceAddress.mElement = kAudioObjectPropertyElementMaster;
-                if (AudioObjectGetPropertyData(deviceIDs[idx], &deviceAddress, 0, NULL, &propertySize, deviceName) == noErr) {
-                    propertySize = sizeof(manufacturerName);
-                    deviceAddress.mSelector = kAudioDevicePropertyDeviceManufacturer;
+                if (AudioObjectGetPropertyDataSize(deviceIDs[idx], &deviceAddress, 0, NULL, &propertySize) == noErr && propertySize > 0) {
+                    propertySize = sizeof(deviceName);
+                    deviceAddress.mSelector = kAudioDevicePropertyDeviceNameCFString;
                     deviceAddress.mScope = kAudioObjectPropertyScopeGlobal;
                     deviceAddress.mElement = kAudioObjectPropertyElementMaster;
-                    if (AudioObjectGetPropertyData(deviceIDs[idx], &deviceAddress, 0, NULL, &propertySize, manufacturerName) == noErr) {
-                        CFStringRef     uidString;
-                        
-                        propertySize = sizeof(uidString);
-                        deviceAddress.mSelector = kAudioDevicePropertyDeviceUID;
+                    if (AudioObjectGetPropertyData(deviceIDs[idx], &deviceAddress, 0, NULL, &propertySize, &deviceName) == noErr) {
+                        propertySize = sizeof(manufacturerName);
+                        deviceAddress.mSelector = kAudioDevicePropertyDeviceManufacturerCFString;
                         deviceAddress.mScope = kAudioObjectPropertyScopeGlobal;
                         deviceAddress.mElement = kAudioObjectPropertyElementMaster;
-                        
-                        if (AudioObjectGetPropertyData(deviceIDs[idx], &deviceAddress, 0, NULL, &propertySize, &uidString) == noErr) {
-                            NSLog(@"device %s by %s id %@", deviceName, manufacturerName, uidString);
-                            [result addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%s", deviceName], @"name",
-                                                                                          [NSString stringWithFormat:@"%s", manufacturerName], @"manufacturer", uidString, @"id", nil]];
-                            CFRelease(uidString);
+                        if (AudioObjectGetPropertyData(deviceIDs[idx], &deviceAddress, 0, NULL, &propertySize, &manufacturerName) == noErr) {
+                            CFStringRef     uidString;
+                            
+                            propertySize = sizeof(uidString);
+                            deviceAddress.mSelector = kAudioDevicePropertyDeviceUID;
+                            deviceAddress.mScope = kAudioObjectPropertyScopeGlobal;
+                            deviceAddress.mElement = kAudioObjectPropertyElementMaster;
+                            
+                            if (AudioObjectGetPropertyData(deviceIDs[idx], &deviceAddress, 0, NULL, &propertySize, &uidString) == noErr) {
+                                NSString *deviceNameStr = (NSString *)deviceName;
+                                NSString *manufacturerNameStr = (NSString *)manufacturerName;
+                                NSString *uidStringStr = (NSString *)uidString;
+                                NSLog(@"device %@ by %@ id %@", deviceNameStr, manufacturerNameStr, uidStringStr);
+                                [result addObject:[NSDictionary dictionaryWithObjectsAndKeys:deviceNameStr, @"name",
+                                                                                        manufacturerNameStr, @"manufacturer", uidStringStr, @"id", nil]];
+                            }
                         }
                     }
                 }
@@ -2022,5 +2031,6 @@ cleanup:
     
     return result;
 }
+
 
 @end

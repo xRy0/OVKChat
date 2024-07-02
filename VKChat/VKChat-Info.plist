@@ -9,9 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>VKChatIconBeta.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.positiveteam.${PRODUCT_NAME:rfc1034identifier}</string>
-	<key>UIUserInterfaceStyle</key>
-	<string>Light</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -34,5 +32,9 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSRequiresAquaSystemAppearance</key>
+	<true/>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>

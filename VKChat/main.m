@@ -10,5 +10,11 @@
 
 int main(int argc, char *argv[])
 {
-    return NSApplicationMain(argc, (const char **)argv);
+    @autoreleasepool {
+            if (@available(macOS 10.14, *)) {
+                [NSApplication sharedApplication].appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+            }
+            return NSApplicationMain(argc, (const char **)argv);
+        }
+    
 }

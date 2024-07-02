@@ -1,2 +1,2 @@
-<key>UIUserInterfaceStyle</key>
-<string>Light</string>
+<key>NSRequiresAquaSystemAppearance</key>
+<true/>
