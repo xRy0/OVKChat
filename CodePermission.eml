@@ -1,0 +1,140 @@
+Return-path: <serglazy@gmail.com>
+Original-recipient: rfc822;piefox@icloud.com
+Received: from ms13p00im-qukt33111702.me.com by p66-mailgateway-smtp-67b44b8f45-bfjpq (mailgateway 2420B58)
+	with SMTP id 021062db-a46a-46da-a2b0-1e85b251c8df 
+	for <piefox@icloud.com>; Wed, 3 Jul 2024 08:34:55 GMT
+X-Apple-MoveToFolder: INBOX 
+X-Apple-Action: MOVE_TO_FOLDER/INBOX
+X-Apple-UUID: 021062db-a46a-46da-a2b0-1e85b251c8df
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	by ms13p00im-qukt33111702.me.com (Postfix) with ESMTPS id DA22A5800250
+	for <piefox@icloud.com>; Wed,  3 Jul 2024 08:34:53 +0000 (UTC)
+X-ICL-SCORE: 3.333033030042
+X-ICL-INFO: GAtbVUseBVFGSVVESAMGUkFLRFcUWUIPAApbVRYSFhEAREQZF15TQFUcAkpaQ1MQEhUHDQFwUQ8U
+ EApZG19bQFUfAkpaV1sDHBVIFBddFEIGEBZKWgIGW1tBU1lKAQ5MQU9EVxBVWg1IWwsWEVwbBx9I
+ SxFMBhgFGhYBGx0eVQ0YW0YHDEILQBgYDxtVVVxTWB9SQVZXWQ0SFQNZG19bQFUdAkpaV1sDHBVI
+ FBddFEIYEAJKWgx1IyVPFVo6AEISKk4FRA1jBRMYESIQEmJ3ASwPLh8NAkw2LQsHBjtqBDM/Mykh
+ LncFXzQ5CxYRXBgFGBgPG1ZTWQ9LW0YFGw0UEhwcABgAcF8BGRYTE1ZTWQ9X
+Authentication-Results: bimi.icloud.com; bimi=skipped reason="insufficient dmarc"
+X-ARC-Info: policy=fail; arc=none
+Authentication-Results: arc.icloud.com; arc=none
+Authentication-Results: dmarc.icloud.com; dmarc=pass header.from=gmail.com
+X-DMARC-Info: pass=pass; dmarc-policy=none; s=r1; d=r1; pdomain=gmail.com
+X-DMARC-Policy: v=DMARC1; p=none; sp=quarantine; rua=mailto:mailauth-reports@google.com
+Authentication-Results: dkim-verifier.icloud.com;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=juuYR4+A
+Authentication-Results: spf.icloud.com; spf=pass (spf.icloud.com: domain of serglazy@gmail.com designates 209.85.218.46 as permitted sender) smtp.mailfrom=serglazy@gmail.com
+Received-SPF: pass (spf.icloud.com: domain of serglazy@gmail.com designates 209.85.218.46 as permitted sender) receiver=spf.icloud.com; client-ip=209.85.218.46; helo=mail-ej1-f46.google.com; envelope-from=serglazy@gmail.com
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a72af03ebdfso711773466b.3
+        for <piefox@icloud.com>; Wed, 03 Jul 2024 01:34:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719995692; x=1720600492; darn=icloud.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=e2Eq5MQD/0fyQ/xunIVsNwkKLqX5KOu9/rYJCJ0VsbU=;
+        b=juuYR4+A/kh69ZaI0dXJkCEGkAD49Kk2T9Mncg15SndbWvTSO+MgU3AYSs/7uBNjKk
+         IQxEJvaJb/6KMfEpHZhOmiuvQahd4wqiGBCq9Tq4LhPdrUjbSkLaoGwI8hdo4Iy3xmeH
+         DuWgrmYjyFg8IVNk2cTTL77P0NtINLu3WJtOFluKtSfobGIzItdnBNCqEqCLsCt1qHXc
+         G5OGfLHBiThhutviiUeTE+Imel2byq4JmWnJS99TSTujdylFCwBA0aaKk2GN24o8krAj
+         6psCeLeBUk7zZOfKHU2/3mxzvenx9Xt3hczThDz3doMDy8N34I8eX4/TzlYV4zBVcdgE
+         cTMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719995692; x=1720600492;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=e2Eq5MQD/0fyQ/xunIVsNwkKLqX5KOu9/rYJCJ0VsbU=;
+        b=mHVAnEwpF4qxe8tCqgaYLtcj67DTQ+GLksslMn2HWLYsE17ppHoyQY8iNzeVGSfnlo
+         i9qfIGmxBsr4KeyrbelJNvm3l1W320tEFnN73DL4rM57F29Q6Du50WMOvaF06cIdOlC0
+         bK0n20qV52euNXjpnmV77/GaHEORa0Bim2m3yIVaN8/atp2NGNauKQWIgF6B/o0qrymN
+         LGq1/+wriHPfpGLO/auIiWzXP4kHsSITiMmAVyp5FHfBicJ0ruiRlkkYmcbyFgyBbwP7
+         ifh0HExMfS1SIWcuq9G8ogg1iibe5IrwlF5h8THr35lQvKcCmBqk42TGesUpYecYowlZ
+         D4wA==
+X-Gm-Message-State: AOJu0YzhT0caUOkpwICd6zeQoWmE6puo1kgc0dFlyWeGldnWuuWR5HVh
+	nIQjOI1ojc3Dp8WW6CQswIHUKWQAM7RbGQLHnNaFvj4azPMSrKcCyrrSYFOIzZ+gz6kuS7x2ZPb
+	T+buq/74hQo9FhDykS8pcjBocgxvoSw==
+X-Google-Smtp-Source: AGHT+IHHmEeuEEmtPH3CAPol+E5EkqqzGOaiXXS6VmCzpPfd0Z/ho1dR08zG4wFhpwZpOOLiwSIPrl/7sQNW0MLK3vs=
+X-Received: by 2002:a17:907:7f87:b0:a72:8a62:65e7 with SMTP id
+ a640c23a62f3a-a751443fe1emr757398766b.57.1719995692010; Wed, 03 Jul 2024
+ 01:34:52 -0700 (PDT)
+MIME-Version: 1.0
+References: <BF2FDD43-D936-4F8E-98B3-1231C15A815B@icloud.com>
+In-Reply-To: <BF2FDD43-D936-4F8E-98B3-1231C15A815B@icloud.com>
+From: =?UTF-8?B?0KHQtdGA0LPQtdC5INCb0LXQvdGM0LrQvtCy?= <serglazy@gmail.com>
+Date: Wed, 3 Jul 2024 11:34:40 +0300
+Message-ID: <CAP6s-B0tp_7c3uS3qmhDgjRAcYvHhu2zTXraqCZ2QJJOVVG3=A@mail.gmail.com>
+Subject: =?UTF-8?B?UmU6INCg0LDQt9GA0LXRiNC10L3QuNC1INC90LAg0LjRgdC/0L7Qu9GM0LfQvtCy0LDQvQ==?=
+	=?UTF-8?B?0LjQtSDQstCw0YjQtdCz0L4g0LrQvtC00LA=?=
+To: =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0JHQvtGA0LjRgdC+0LI=?= <piefox@icloud.com>
+Content-Type: multipart/alternative; boundary="0000000000003cd411061c53b472"
+X-CLX-Shades: Deliver
+X-MANTSH: 1TFkXGxoaHxEKWUQXZFJaa0lYTUFvX3IRCllNF25PRkNcT1gRCl9ZFxgYEhEKX00
+ XZEVETxEKWUkXHR9xGwYbHxp3BhscBhkaQhsbBhoGHR0GGnEaEBp3BhoGGgYZGgYaBhoGGnEaE
+ Bp3BhoRClleF2xseREKQ04XUHB8R1N4aWFbZkBpRlpdHENmUn1PaGlQYmN9fGQYGHgRClhcFxk
+ EGgQfGgUbGhoEEhgEGx8SBBgTEBseGh8aEQpeWRdOX1hiYBEKTVwXGx8eEQpMWhdoa2traxEKT
+ EYXYk1rEQpDWhcYGhMEEh8EGBsSBB4cEQpCXhcbEQpCXBcbEQpeThcbEQpCSxdjU2NrexNYfhp
+ fXhEKQkkXY1Nja3sTWH4aX14RCkJFF2RdUE9ybGFMSQF6EQpCThdjU2NrexNYfhpfXhEKQkwXY
+ xp9TWFLW0cFSU0RCkJsF2YYSGBufn5BaxJvEQpCQBdsR2xEBUN/Gnp9HhEKQlgXZ15FaH1laGR
+ nBVoRCk1eFwcbEQpaWBcZEQpwaBdrb31HQFxJBX1/cxAHGRoRCnBoF2FEeUtgGF98T21TEAcZG
+ hEKcGgXYEZvbktNbnMTRm0QBxkaEQpwaBdtYxhnYnleAWEeXRAHGRoRCnBoF2dNZhsSBXlQcGh
+ BEAcZGhEKcGgXZEtYRhtnGUNpQmUQBxkaEQpwaBd6b2twbX16YGxkExAHGRoRCnBoF2hhbWJjU
+ GFpRk9+EAcZGhEKcH8Xax1rHlN7Z2NLbXoQBxkdEQpwXxdsc2dab00bGnpvTBAHGRoRCnB9F2Z
+ TEh1GbFpdAXtZEAcZGhEKcF8XaUl6Q0RjY1MFHVoQBxkaEQpwfRdtaEZgS054RW8TaBAHGRoRC
+ nBsF296c3xTfHt/EmVNEAcZGhEKcEwXaHhFWmVPb2hIbhwQBxkaEQptfhcHGxEKWE0XSxE=
+X-Proofpoint-GUID: zZVmyRCKqLjClpw6iLxWeBCzHIWVN22R
+X-Proofpoint-ORIG-GUID: zZVmyRCKqLjClpw6iLxWeBCzHIWVN22R
+
+--0000000000003cd411061c53b472
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+0JTQvtCx0YDRi9C5INC00LXQvdGMIQ0KDQrQmNGB0L/QvtC70YzQt9GD0LnRgtC1LiDQotC+0LvR
+jNC60L4g0LrQvtC00YMg0LHQvtC70YzRiNC1IDEwINC70LXRgiwg0L3QsNCy0YDRj9C0INC70Lgg
+0L7QvSDRgdC+0LHQtdGA0LXRgtGB0Y8g0L3QsCDQv9C+0YHQu9C10LTQvdC40YUNCtCy0LXRgNGB
+0LjRj9GFIFhDb2RlDQoNCk9uIFR1ZSwgSnVsIDIsIDIwMjQgYXQgNDozM+KAr1BNINCU0LzQuNGC
+0YDQuNC5INCR0L7RgNC40YHQvtCyIDxwaWVmb3hAaWNsb3VkLmNvbT4gd3JvdGU6DQoNCj4g0JfQ
+tNGA0LDQstGB0YLQstGD0LnRgtC1IQ0KPiDQn9C40YjRgyDQv9C+INC/0L7QstC+0LTRgyDQstCw
+0YjQtdCz0L4g0L/RgNC+0LXQutGC0LAgaHR0cHM6Ly9naXRodWIuY29tL3NlcmdleWxlbmtvdi9W
+S0NoYXQNCj4g0J7QvSDQvdCw0YXQvtC00LjRgtGB0Y8g0LIg0L/Rg9Cx0LvQuNGH0L3QvtC8INCw
+0YDRhdC40LLQtSDQuCDQvdC1INC40LzQtdC10YIg0L3QuNC60LDQutC+0Lkg0LvQuNGG0LXQvdC3
+0LjQuC4NCj4g0KXQvtGH0YMg0YHQv9GA0L7RgdC40YLRjCDQstCw0YjQtdCz0L4g0YDQsNC30YDQ
+tdGI0LXQvdC40Y8g0L3QsCDQuNGB0L/QvtC70YzQt9C+0LLQsNC90LjQtSDQstCw0YjQtdCz0L4g
+0LrQvtC00LAuDQo+INCV0YHRgtGMINC+0LTQuNC9INC/0YDQvtC10LrRgiBodHRwczovL2dpdGh1
+Yi5jb20vb3BlbnZrL29wZW52ayDQs9C00LUg0LvRjtC00Lgg0LLQvtGB0YHQvtC30LTQsNGO0YIN
+Cj4g0YHRgtCw0YDRi9C5INC00L7QsdGA0YvQuSDQstC60L7QvdGC0LDQutGC0LUuDQo+INCvINCx
+0Ysg0YXQvtGC0LXQuyDQsNC00LDQv9GC0LjRgNC+0LLQsNGC0Ywg0LLQsNGIINC60L7QtCDQv9C+
+0LQgQVBJIG9wZW52ayDQuCDQvtC/0YPQsdC70LjQutC+0LLQsNGC0Ywg0L/QvtC0DQo+INC70LjR
+htC10L3Qt9C40LXQuSBNSVQsINGH0YLQvtCx0Ysg0LrQsNC20LTRi9C5INC80L7QsyDQvNC+0LTQ
+uNGE0LjRhtC40YDQvtCy0LDRgtGMINC10LPQviDQuCDQuNGB0L/QvtC70YzQt9C+0LLQsNGC0Ywg
+0LIg0YHQstC+0LjRhQ0KPiDQvdGD0LbQtNCw0YUNCg==
+--0000000000003cd411061c53b472
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+PGRpdiBkaXI9Imx0ciI+0JTQvtCx0YDRi9C5INC00LXQvdGMITxicj48YnI+0JjRgdC/0L7Qu9GM
+0LfRg9C50YLQtS4g0KLQvtC70YzQutC+INC60L7QtNGDINCx0L7Qu9GM0YjQtSAxMCDQu9C10YIs
+INC90LDQstGA0Y/QtCDQu9C4INC+0L0g0YHQvtCx0LXRgNC10YLRgdGPINC90LAg0L/QvtGB0LvQ
+tdC00L3QuNGFINCy0LXRgNGB0LjRj9GFIFhDb2RlPC9kaXY+PGJyPjxkaXYgY2xhc3M9ImdtYWls
+X3F1b3RlIj48ZGl2IGRpcj0ibHRyIiBjbGFzcz0iZ21haWxfYXR0ciI+T24gVHVlLCBKdWwgMiwg
+MjAyNCBhdCA0OjMz4oCvUE0g0JTQvNC40YLRgNC40Lkg0JHQvtGA0LjRgdC+0LIgJmx0OzxhIGhy
+ZWY9Im1haWx0bzpwaWVmb3hAaWNsb3VkLmNvbSI+cGllZm94QGljbG91ZC5jb208L2E+Jmd0OyB3
+cm90ZTo8YnI+PC9kaXY+PGJsb2NrcXVvdGUgY2xhc3M9ImdtYWlsX3F1b3RlIiBzdHlsZT0ibWFy
+Z2luOjBweCAwcHggMHB4IDAuOGV4O2JvcmRlci1sZWZ0OjFweCBzb2xpZCByZ2IoMjA0LDIwNCwy
+MDQpO3BhZGRpbmctbGVmdDoxZXgiPtCX0LTRgNCw0LLRgdGC0LLRg9C50YLQtSEgPGJyPg0K0J/Q
+uNGI0YMg0L/QviDQv9C+0LLQvtC00YMg0LLQsNGI0LXQs9C+INC/0YDQvtC10LrRgtCwIDxhIGhy
+ZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9zZXJnZXlsZW5rb3YvVktDaGF0IiByZWw9Im5vcmVmZXJy
+ZXIiIHRhcmdldD0iX2JsYW5rIj5odHRwczovL2dpdGh1Yi5jb20vc2VyZ2V5bGVua292L1ZLQ2hh
+dDwvYT48YnI+DQrQntC9INC90LDRhdC+0LTQuNGC0YHRjyDQsiDQv9GD0LHQu9C40YfQvdC+0Lwg
+0LDRgNGF0LjQstC1INC4INC90LUg0LjQvNC10LXRgiDQvdC40LrQsNC60L7QuSDQu9C40YbQtdC9
+0LfQuNC4LiA8YnI+DQrQpdC+0YfRgyDRgdC/0YDQvtGB0LjRgtGMINCy0LDRiNC10LPQviDRgNCw
+0LfRgNC10YjQtdC90LjRjyDQvdCwINC40YHQv9C+0LvRjNC30L7QstCw0L3QuNC1INCy0LDRiNC1
+0LPQviDQutC+0LTQsC48YnI+DQrQldGB0YLRjCDQvtC00LjQvSDQv9GA0L7QtdC60YIgPGEgaHJl
+Zj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW52ay9vcGVudmsiIHJlbD0ibm9yZWZlcnJlciIgdGFy
+Z2V0PSJfYmxhbmsiPmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVudmsvb3BlbnZrPC9hPiDQs9C00LUg
+0LvRjtC00Lgg0LLQvtGB0YHQvtC30LTQsNGO0YIg0YHRgtCw0YDRi9C5INC00L7QsdGA0YvQuSDQ
+stC60L7QvdGC0LDQutGC0LUuIDxicj4NCtCvINCx0Ysg0YXQvtGC0LXQuyDQsNC00LDQv9GC0LjR
+gNC+0LLQsNGC0Ywg0LLQsNGIINC60L7QtCDQv9C+0LQgQVBJIG9wZW52ayDQuCDQvtC/0YPQsdC7
+0LjQutC+0LLQsNGC0Ywg0L/QvtC0INC70LjRhtC10L3Qt9C40LXQuSBNSVQsINGH0YLQvtCx0Ysg
+0LrQsNC20LTRi9C5INC80L7QsyDQvNC+0LTQuNGE0LjRhtC40YDQvtCy0LDRgtGMINC10LPQviDQ
+uCDQuNGB0L/QvtC70YzQt9C+0LLQsNGC0Ywg0LIg0YHQstC+0LjRhSDQvdGD0LbQtNCw0YU8L2Js
+b2NrcXVvdGU+PC9kaXY+DQo=
+--0000000000003cd411061c53b472--
