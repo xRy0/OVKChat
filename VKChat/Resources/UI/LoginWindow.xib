@@ -4,7 +4,7 @@
         <deployment version="1060" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <plugIn identifier="com.apple.WebKitIBPlugin" version="22690"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="VKLoginController">
@@ -28,7 +28,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="560" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView fixedFrame="YES" id="5ZD-bu-Mit">
+                            <webView id="5ZD-bu-Mit">
                                 <rect key="frame" x="0.0" y="0.0" width="560" height="400"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12" javaEnabled="NO">
